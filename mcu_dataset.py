@@ -9,12 +9,12 @@ Created on Mon Oct 25 22:02:42 2021
 # %% Import module
 
 import pandas as pd
-import os
+#import os
 import seaborn as sns
 import matplotlib.pyplot as plt
 
 # %% Load dataset
-os.chdir("C:\\Users\Jean-Paul\SkyDrive\Data Science\Python\Kaggle\MCU_complete_dataset")
+#os.chdir("C:\\Users\Jean-Paul\SkyDrive\Data Science\Python\Kaggle\MCU_complete_dataset")
 mcu_dataset=pd.read_csv("mcu dataset.csv", 
                         parse_dates = ["US release Date"])
 
