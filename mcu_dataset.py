@@ -17,6 +17,7 @@ import matplotlib.pyplot as plt
 #os.chdir("C:\\Users\Jean-Paul\SkyDrive\Data Science\Python\Kaggle\MCU_complete_dataset")
 mcu_dataset=pd.read_csv("mcu dataset.csv", 
                         parse_dates = ["US release Date"])
+#https://www.kaggle.com/datasets/rachit239/mcu-complete-dataset
 
 # %% Explore the dataset
 mcu_dataset.columns
