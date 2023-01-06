@@ -32,7 +32,7 @@ mcu_dataset.describe()
 
 def convert_to_num(dollar_col):
     """
-    Convert the dollar column from mcu_dataset to float by "$", "," and
+    Convert the dollar column from mcu_dataset to float by removing "$", "," and
     changing the type to float.
 
     Parameters
