@@ -32,27 +32,34 @@ mcu_dataset.describe()
 
 def convert_to_num(dollar_col):
     """
-    Convert the dollar column from mcu_dataset to float by removing "$", "," and
+    Convert a dollar column from mcu_dataset to float by removing "$", "," and
     changing the type to float.
 
     Parameters
     ----------
-    dollar_col : str
-        The name of one the dollar column
+    series : pandas.core.series.Series
+        The Series object to be converted
 
     Returns
     -------
-    None.
+    
+    pandas.core.series.Series
+    The converted Series object
 
     """
-    mcu_dataset[dollar_col]=mcu_dataset[dollar_col].str.replace("$", "")
-    mcu_dataset[dollar_col]=mcu_dataset[dollar_col].str.replace(",", "")
-    mcu_dataset[dollar_col]=mcu_dataset[dollar_col].astype("float")
+    dollar_col=dollar_col.str.replace("$", "")
+    dollar_col=dollar_col.str.replace(",", "")
+    dollar_col=dollar_col.astype("float")
+    return dollar_col
 
 #Loop to convert all the dollar  column
-for col in ['Budget', 'Domestic Gross',
-       'Total Gross', 'Opening Gross']:
-    convert_to_num(col)
+# for col in ['Budget', 'Domestic Gross',
+#        'Total Gross', 'Opening Gross']:
+#     convert_to_num(col)
+    
+dollar_columns = ['Budget', 'Domestic Gross', 'Total Gross', 'Opening Gross']
+
+mcu_dataset.loc[:, dollar_columns] = mcu_dataset.loc[:, dollar_columns].apply(convert_to_num)
     
 #Rename the dollar columns
 mcu_dataset.columns= ['Name', 'US release Date', 'Director', 'Producer', 'Duration', 'Genre',
