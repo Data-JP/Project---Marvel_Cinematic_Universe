@@ -78,14 +78,16 @@ mcu_dataset.Duration.max()
 mcu_dataset.Duration.min()
 
 # %% Chart analysis
-sns.set_style("whitegrid")
+sns.set_style("white")
 f, axes= plt.subplots(1,1)
 # Number movies/Phase
 sns.countplot("Phase",data=mcu_dataset)
 plt.show()
 # Evolution budget accross time
-g=sns.lineplot("US release Date", "Total Gross($)", data=mcu_dataset)\
-    .set_title("Budget evolution")
+g=sns.lineplot("US release Date", "Total Gross($)", data=mcu_dataset)
+g.set_title("Budget evolution")
+sns.despine()                           #remove borders
+
 plt.show()
 
 # Link between Budget and IMBD rating and score
@@ -102,7 +104,8 @@ plt.show()
 # Return on Investment
 mcu_dataset["Benefit($)"]=mcu_dataset["Total Gross($)"]\
     -mcu_dataset["Budget($)"]
-sns.barplot('Name','Benefit($)', data=mcu_dataset).\
+sns.barplot('Name','Benefit($)', data=mcu_dataset.sort_values(by='Benefit($)', 
+                                                              ascending=False)).\
     set_title("Return on Investment (ROI)")
 plt.xticks(rotation=90)
 plt.show()
