@@ -102,8 +102,7 @@ h4=sns.regplot("Total Gross($)", "metascore", data=mcu_dataset,ci=None,
                    ax=axes[1,1])
 plt.show()
 # Return on Investment
-mcu_dataset["Benefit($)"]=mcu_dataset["Total Gross($)"]\
-    -mcu_dataset["Budget($)"]
+mcu_dataset["Benefit($)"]=(mcu_dataset["Total Gross($)"]/mcu_dataset["Budget($)"])*100
 sns.barplot('Name','Benefit($)', data=mcu_dataset.sort_values(by='Benefit($)', 
                                                               ascending=False)).\
     set_title("Return on Investment (ROI)")
