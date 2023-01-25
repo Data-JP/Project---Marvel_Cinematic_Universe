@@ -113,3 +113,18 @@ plt.show()
 sns.regplot("Budget($)", "Benefit($)", data=mcu_dataset, ci=None, 
             color="red", marker="H")\
     .set_title("Relation between Budget and ROI")
+    
+# Favorite actor
+not_avengers_movies=['Iron Man', 'The incredible Hulk', 'Iron Man 2', 'Thor',
+       'Captain America: The first Avenger',
+       'Iron Man 3', 'Thor: The dark world',
+       'Captain America : The Winter Soldier', 'Guardians Of the Galaxy',
+        'Ant-Man',
+       'Captain America: Civil War', 'Doctor Strange ',
+       'Guardians of the Galaxy Vol. 2', 'Spider-Man:Homecoming',
+       'Thor:Ragnarok', 'Black Panther', 
+       'Ant-Man and the Wasp', 'Captain-Marvel', 
+       'Spider-Man:Far From Home']
+not_avengers_index = [list(mcu_dataset.Name.unique()).index(movies) for movies in not_avengers_movies]    #list comprehension
+
+mcu_dataset_without_avengers=mcu_dataset.iloc[not_avengers_index, :]
