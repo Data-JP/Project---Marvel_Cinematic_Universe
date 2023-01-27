@@ -12,7 +12,7 @@ import pandas as pd
 #import os
 import seaborn as sns
 import matplotlib.pyplot as plt
-import re
+import numpy as np
 
 # %% Load dataset
 #os.chdir("C:\\Users\Jean-Paul\SkyDrive\Data Science\Python\Kaggle\MCU_complete_dataset")
@@ -129,7 +129,11 @@ not_avengers_movies=['Iron Man', 'The incredible Hulk', 'Iron Man 2', 'Thor',
 not_avengers_index = [list(mcu_dataset.Name.unique()).index(movies) \
                       for movies in not_avengers_movies]    #list comprehension to get index of not avengers movies
 
-mcu_dataset_without_avengers=mcu_dataset.iloc[not_avengers_index, :]
+mcu_dataset_without_avengers=mcu_dataset.iloc[not_avengers_index, :] #creation of dataframe without the avengers movies
 
 #isolate main actor
 mcu_dataset_without_avengers["Main_actor"]=mcu_dataset_without_avengers.Cast.str.split(",", 1).str[0]
+
+mcu_dataset_without_avengers.pivot_table(values=['IMDB rating','metascore'], 
+                                         index='Main_actor', aggfunc=np.mean).\
+    sort_values(by=['IMDB rating','metascore'], ascending=False)
