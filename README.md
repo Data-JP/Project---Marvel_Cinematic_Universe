@@ -9,7 +9,7 @@ Through this project, I wanted to investigate the success of this franchise as w
 ## Objectives
 This report aims to answer the questions below:
 
-1. Link between Budget and IMBD rating (and metascore)
+1. Link between the budget and the reviews
 2. Return on Investment (ROI)
 3. Correlation between Budget and Benefit
 4. Favorite superhero
