@@ -95,24 +95,76 @@ plt.annotate("Budget evolution", (mcu_dataset["US release Date"].iloc[-1],
                                   mcu_dataset["Budget($)"].iloc[-1]), 
              textcoords="offset points", xytext=(40,-15), ha='center', 
              fontsize=12, color="cornflowerblue")
+
+# Adding dollar sign
 x=mcu_dataset["Budget($)"]            #variable to avoid 2 pairs of quotation marks
 formatter = ticker.StrMethodFormatter('{x:,.0f} $')  # add dollar sign in the y label 
 g.yaxis.set_major_formatter(formatter)
+
 sns.despine()                           #remove borders
-
 plt.show()
 
-# Link between Budget and IMBD rating and score
+# Link between Budget, Total Gross($) and IMBD rating, score
 f, axes= plt.subplots(2,2)
-h1=sns.regplot("Budget($)", "IMDB rating", data=mcu_dataset, ci=None,
+
+h1=sns.regplot(x="Budget($)", y="IMDB rating", data=mcu_dataset, ci=None, 
+               color= "limegreen",
                    ax=axes[0,0])
-h2=sns.regplot("Budget($)", "metascore", data=mcu_dataset, ci=None,
-                   ax=axes[1,0])
-h3=sns.regplot("Total Gross($)", "IMDB rating", data=mcu_dataset, ci=None,
+h2=sns.regplot(x="Budget($)", y="metascore", data=mcu_dataset, ci=None,
+               color= "limegreen", ax=axes[1,0])
+h3=sns.regplot(x="Total Gross($)", y="IMDB rating", data=mcu_dataset, ci=None, color= "limegreen",
                    ax=axes[0,1])
-h4=sns.regplot("Total Gross($)", "metascore", data=mcu_dataset,ci=None, 
+h4=sns.regplot(x="Total Gross($)", y="metascore", data=mcu_dataset,ci=None, color= "limegreen",
                    ax=axes[1,1])
+# Set titles
+def set_titles(axes, titles):
+    """
+    Function to set the titles of the subplots in a grid.
+    
+    Parameters:
+    axes (2D array of AxesSubplot objects): The subplots in the grid.
+    titles (2D list of strings): The titles to set for each subplot.
+    
+    Returns:
+    None
+    """
+    for i in range(axes.shape[0]):
+        for j in range(axes.shape[1]):
+            axes[i, j].set_title(titles[i][j])
+
+# Define the titles for the subplots
+titles = [["Correlation between Budget and IMBD rating", "Correlation between Total Gross and IMBD rating"], 
+          ["Correlation between Budget and metascore", "Correlation between Total Gross and metascore"]]
+
+# Call the set_titles function
+set_titles(axes, titles)
+
+
+# Share axes
+axes[1,0].sharex(axes[0,0])
+axes[0,0].sharey(axes[0,1])
+axes[1,0].sharey(axes[1,1])
+axes[0,1].sharex(axes[1,1])
+
+# Remove x labels
+for i in range(axes.shape[1]):
+        axes[0, i].set_xlabel("")
+
+# Remove labels
+# h3.set_yticks([])
+# h4.set_yticklabels(labels="")
+# h3.set_xticklabels(labels="")
+# h4.set_xticklabels(labels="")
+
+# Adding dollar sign
+#x=mcu_dataset["Budget($)"]            
+# formatter = ticker.StrMethodFormatter('{x:,.0f} $')
+# h1.xaxis.set_major_formatter(formatter)
+# h2.xaxis.set_major_formatter(formatter)
+
+sns.despine()   
 plt.show()
+
 # Return on Investment
 mcu_dataset["Benefit($)"]=(mcu_dataset["Total Gross($)"]/mcu_dataset["Budget($)"])*100
 sns.barplot('Name','Benefit($)', data=mcu_dataset.sort_values(by='Benefit($)', 
