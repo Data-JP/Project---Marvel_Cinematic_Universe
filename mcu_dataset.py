@@ -87,16 +87,16 @@ f, axes= plt.subplots(1,1)
 sns.countplot("Phase",data=mcu_dataset)
 plt.show()
 # Evolution budget accross time
-g=sns.lineplot("US release Date", "Total Gross($)", data=mcu_dataset, 
+g=sns.lineplot("US release Date", "Budget($)", data=mcu_dataset, 
                color="cornflowerblue")
 #♦g.set_title("Budget evolution")
-g.set_ylabel("Total Gross($)", loc="top", rotation=360)
+g.set_ylabel("Budget($)", loc="top", rotation=360)
 plt.annotate("Budget evolution", (mcu_dataset["US release Date"].iloc[-1], 
-                                  mcu_dataset["Total Gross($)"].iloc[-1]), 
+                                  mcu_dataset["Budget($)"].iloc[-1]), 
              textcoords="offset points", xytext=(40,-15), ha='center', 
              fontsize=12, color="cornflowerblue")
-x=mcu_dataset["Total Gross($)"]            #variable to avoid 2 pairs of quotation marks
-formatter = ticker.StrMethodFormatter('{x:,.0f} $')
+x=mcu_dataset["Budget($)"]            #variable to avoid 2 pairs of quotation marks
+formatter = ticker.StrMethodFormatter('{x:,.0f} $')  # add dollar sign in the y label 
 g.yaxis.set_major_formatter(formatter)
 sns.despine()                           #remove borders
 
