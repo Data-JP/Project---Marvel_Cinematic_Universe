@@ -184,7 +184,11 @@ b.axes.set_ylabel("")
 sns.despine() 
 plt.show()
 
-# Relation between Budget and Benefit
+# Ranking of reviews
+mcu_dataset.loc[:,['Name','IMDB rating', 'metascore']].\
+    sort_values(by='IMDB rating', ascending=False).reset_index(drop=True)
+
+# Relation between Budget and ROI
 sns.regplot("Budget($)", "ROI", data=mcu_dataset, ci=None, 
             color="red", marker="H")\
     .set_title("Relation between Budget and ROI")
