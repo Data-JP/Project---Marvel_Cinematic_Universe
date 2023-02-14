@@ -166,15 +166,26 @@ sns.despine()
 plt.show()
 
 # Return on Investment
-mcu_dataset["Benefit($)"]=(mcu_dataset["Total Gross($)"]/mcu_dataset["Budget($)"])*100
-sns.barplot('Name','Benefit($)', data=mcu_dataset.sort_values(by='Benefit($)', 
+mcu_dataset["ROI"]=np.divide(mcu_dataset["Total Gross($)"]-mcu_dataset["Budget($)"],
+                              mcu_dataset["Budget($)"])
+#(mcu_dataset["Total Gross($)"]/mcu_dataset["Budget($)"])*100
+b=sns.barplot(y='Name',x='ROI', data=mcu_dataset.sort_values(by='ROI', 
                                                               ascending=False)).\
-    set_title("Return on Investment (ROI)")
-plt.xticks(rotation=90)
+    set_title("Return on Investment of the various MCU films")
+
+# Adding %-formatting to the y-axis
+from matplotlib.ticker import PercentFormatter
+b.axes.xaxis.set_major_formatter(PercentFormatter(1)) 
+
+# Removing the x and y axis labels
+b.axes.set_xlabel("")
+b.axes.set_ylabel("")
+
+sns.despine() 
 plt.show()
 
 # Relation between Budget and Benefit
-sns.regplot("Budget($)", "Benefit($)", data=mcu_dataset, ci=None, 
+sns.regplot("Budget($)", "ROI", data=mcu_dataset, ci=None, 
             color="red", marker="H")\
     .set_title("Relation between Budget and ROI")
     
