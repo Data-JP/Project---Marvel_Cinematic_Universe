@@ -173,7 +173,7 @@ b=sns.barplot(y='Name',x='ROI', data=mcu_dataset.sort_values(by='ROI',
                                                               ascending=False)).\
     set_title("Return on Investment of the various MCU films")
 
-# Adding %-formatting to the y-axis
+# Adding %-formatting to the x-axis
 from matplotlib.ticker import PercentFormatter
 b.axes.xaxis.set_major_formatter(PercentFormatter(1)) 
 
@@ -189,9 +189,23 @@ mcu_dataset.loc[:,['Name','IMDB rating', 'metascore']].\
     sort_values(by='IMDB rating', ascending=False).reset_index(drop=True)
 
 # Relation between Budget and ROI
-sns.regplot("Budget($)", "ROI", data=mcu_dataset, ci=None, 
-            color="red", marker="H")\
-    .set_title("Relation between Budget and ROI")
+r=sns.regplot(x="Budget($)", y="ROI", data=mcu_dataset, ci=None, 
+            color="purple", marker="D")\
+    .set_title("Relation between budget and ROI")
+
+r.axes.set_ylabel("ROI", loc="top", rotation=360)
+
+# Adding %-formatting to the y-axis
+from matplotlib.ticker import PercentFormatter
+r.axes.yaxis.set_major_formatter(PercentFormatter(1)) 
+
+# Adding dollar sign
+x=mcu_dataset["Budget($)"]            
+formatter = ticker.StrMethodFormatter('{x:,.0f} $')   
+r.axes.xaxis.set_major_formatter(formatter)
+
+sns.despine() 
+plt.show()
     
 # %% Favorite actor
 not_avengers_movies=['Iron Man', 'The incredible Hulk', 'Iron Man 2', 'Thor',
