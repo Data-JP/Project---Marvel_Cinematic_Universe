@@ -80,6 +80,9 @@ mcu_dataset.Duration.mean()
 mcu_dataset.Duration.max()
 mcu_dataset.Duration.min()
 
+# 4. Use applymap and strip to remove leading and trailing spaces
+mcu_dataset = mcu_dataset.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+
 # %% Chart analysis
 sns.set_style("white")
 f, axes= plt.subplots(1,1)
@@ -208,6 +211,8 @@ sns.despine()
 plt.show()
     
 # %% Favorite actor
+
+# List of MCU movies that are not part of the Avengers series
 not_avengers_movies=['Iron Man', 'The incredible Hulk', 'Iron Man 2', 'Thor',
        'Captain America: The first Avenger',
        'Iron Man 3', 'Thor: The dark world',
@@ -218,14 +223,47 @@ not_avengers_movies=['Iron Man', 'The incredible Hulk', 'Iron Man 2', 'Thor',
        'Thor:Ragnarok', 'Black Panther', 
        'Ant-Man and the Wasp', 'Captain-Marvel', 
        'Spider-Man:Far From Home']
+
+# Get index of not avengers movies
 not_avengers_index = [list(mcu_dataset.Name.unique()).index(movies) \
                       for movies in not_avengers_movies]    #list comprehension to get index of not avengers movies
 
+    
+# Create dataframe without the avengers movies
 mcu_dataset_without_avengers=mcu_dataset.iloc[not_avengers_index, :] #creation of dataframe without the avengers movies
 
-#isolate main actor
-mcu_dataset_without_avengers["Main_actor"]=mcu_dataset_without_avengers.Cast.str.split(",", 1).str[0]
+# dictionary mapping each movie name to its corresponding superhero
+movie_to_superhero = {'Iron Man': 'Iron Man', 
+                      'The incredible Hulk': 'The Hulk',
+                      'Iron Man 2': 'Iron Man', 
+                      'Thor': 'Thor',
+                      'Captain America: The first Avenger': 'Captain America', 
+                      'Iron Man 3': 'Iron Man', 
+                      'Thor: The dark world': 'Thor', 
+                      'Captain America : The Winter Soldier': 'Captain America',
+                      'Guardians Of the Galaxy': 'Guardians Of The Galaxy', 
+                      'Ant-Man': 'Ant-Man', 'Captain America: Civil War': 'Captain America',
+                      'Doctor Strange ': 'Doctor Strange', 
+                      'Guardians of the Galaxy Vol. 2': 'Guardians Of The Galaxy', 
+                      'Spider-Man:Homecoming': 'Spider-Man', 
+                      'Thor:Ragnarok': 'Thor', 
+                      'Black Panther': 'Black Panther',
+                      'Ant-Man and the Wasp': 'Ant-Man', 
+                      'Captain-Marvel': 'Captain Marvel',
+                      'Spider-Man:Far From Home': 'Spider-Man'}
 
-mcu_dataset_without_avengers.pivot_table(values=['IMDB rating','metascore'], 
-                                         index='Main_actor', aggfunc=np.mean).\
+# Add new column with the name of the superhero for each movie
+mcu_dataset_without_avengers['Superhero'] = mcu_dataset_without_avengers['Name'].\
+    apply(lambda x: movie_to_superhero.get(x))
+    #apply(lambda x: movie_to_superhero.get(x.split(':')[0], x.split(':')[0]))
+
+# # Add new column with the name of the superhero for each movie
+# mcu_dataset_without_avengers['Superhero'] = mcu_dataset_without_avengers['Name'].apply(lambda x: x.split(':')[0])
+
+# #isolate main actor
+# mcu_dataset_without_avengers["Main_actor"]=mcu_dataset_without_avengers.Cast.str.split(",", 1).str[0]
+
+# Create pivot table with mean IMDB rating and metascore for each superhero
+mcu_dataset_without_avengers.pivot_table(values=["IMDB rating",'metascore'],
+                                          index='Superhero', aggfunc=np.mean).\
     sort_values(by=['IMDB rating','metascore'], ascending=False)
