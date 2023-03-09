@@ -28,7 +28,6 @@ mcu_dataset.info()
 mcu_dataset.describe()
 
 
-
 # %% Cleaning the dataset
 
 # 1. Change the dollar columns to integer#
@@ -218,7 +217,7 @@ not_avengers_movies=['Iron Man', 'The incredible Hulk', 'Iron Man 2', 'Thor',
        'Iron Man 3', 'Thor: The dark world',
        'Captain America : The Winter Soldier', 'Guardians Of the Galaxy',
         'Ant-Man',
-       'Captain America: Civil War', 'Doctor Strange ',
+       'Captain America: Civil War', 'Doctor Strange',
        'Guardians of the Galaxy Vol. 2', 'Spider-Man:Homecoming',
        'Thor:Ragnarok', 'Black Panther', 
        'Ant-Man and the Wasp', 'Captain-Marvel', 
@@ -243,7 +242,7 @@ movie_to_superhero = {'Iron Man': 'Iron Man',
                       'Captain America : The Winter Soldier': 'Captain America',
                       'Guardians Of the Galaxy': 'Guardians Of The Galaxy', 
                       'Ant-Man': 'Ant-Man', 'Captain America: Civil War': 'Captain America',
-                      'Doctor Strange ': 'Doctor Strange', 
+                      'Doctor Strange': 'Doctor Strange', 
                       'Guardians of the Galaxy Vol. 2': 'Guardians Of The Galaxy', 
                       'Spider-Man:Homecoming': 'Spider-Man', 
                       'Thor:Ragnarok': 'Thor', 
